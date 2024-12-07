@@ -5,13 +5,15 @@ pipeline {
 
     options {
         timeout(time: 10, unit: 'SECONDS')
+        disableConcurrentBuilds()
+        retry(1)
     }
     stages {
         stage('Build') {
             steps{
                 
                     sh ' echo this is build'
-                    sh 'sleep 10'
+                    // sh 'sleep 10'
             }
         }
 
@@ -27,6 +29,7 @@ pipeline {
             steps{
                 
                     sh ' echo this is deploy'
+                    error 'pipeline failed'
                 
             }
         }
@@ -35,7 +38,7 @@ pipeline {
     post {
         always {
             echo " this section always runs"
-            deleteDir()
+            // deleteDir()
         }
 
         success {
