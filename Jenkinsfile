@@ -38,12 +38,12 @@ pipeline {
             steps{
                 
                     sh ' echo this is deploy'
-                    error 'pipeline failed'
+                    // error 'pipeline failed'
                 
             }
         }
 
-        stage {
+        stage('print params') {
             steps{
                 echo " hello ${params.PERSON}"
                 echo " biography: ${params.BIOGRAPHY}"
