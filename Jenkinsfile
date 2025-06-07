@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'AGENT-1'
-    }
+    agent any
 
     options {
         timeout(time: 10, unit: 'SECONDS')
@@ -12,73 +10,51 @@ pipeline {
     parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+        // password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
     }
+
     stages {
         stage('Build') {
-            steps{
-                
-                    sh ' echo this is Build '
-                    // sh 'sleep 10'
+            steps {
+                sh 'echo this is Build'
             }
         }
 
         stage('Test') {
-            steps{
-                 
-                    sh ' echo this is test'
-                
+            steps {
+                sh 'echo this is test'
             }
         }
 
         stage('Deploy') {
             when {
-                expression { env.GIT_BRANCH = "origin/main" }
-            steps{
-                
-                    sh ' echo this is deploy'
-                    // error 'pipeline failed'
-                
+                expression { env.GIT_BRANCH == "origin/main" }
+            }
+            steps {
+                sh 'echo this is deploy'
+                // error 'pipeline failed'
             }
         }
 
-        stage('print params') {
-            steps{
-                echo " hello ${params.PERSON}"
-                echo " biography: ${params.BIOGRAPHY}"
+        stage('Print Params') {
+            steps {
+                echo "Hello ${params.PERSON}"
+                echo "Biography: ${params.BIOGRAPHY}"
             }
         }
-         // stage('Approval'){
-        //     input {
-        //         message "Should we continue?"
-        //         ok "Yes, we should."
-        //         submitter "alice,bob"
-        //         parameters {
-        //             string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-        //         }
-        //     }
-        //     steps {
-        //         echo "Hello, ${PERSON}, nice to meet you."
-        //     }
-        // }
     }
 
     post {
         always {
-            echo " this section always runs"
+            echo "This section always runs"
             // deleteDir()
         }
-
         success {
-            echo " this section runs when pipeline is success"
+            echo "This section runs when pipeline is successful"
         }
         failure {
-            echo " this section runs when pipeline is failed"
+            echo "This section runs when pipeline fails"
         }
     }
-
-}
 }
