@@ -41,6 +41,7 @@ pipeline {
             steps {
                 echo "Hello ${params.PERSON}"
                 echo "Biography: ${params.BIOGRAPHY}"
+                echo "TOGGLE: ${params.TOGGLE}"
             }
         }
     }
