@@ -32,7 +32,7 @@ pipeline {
                 expression { env.GIT_BRANCH == "origin/main" }
             }
             steps {
-                sh 'echo this is deploy stage'
+                sh 'echo this is only a deploy stage'
                 // error 'pipeline failed'
             }
         }
